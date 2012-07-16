@@ -14,12 +14,9 @@ jQuery CoreUISelect is a cross browser easy to stylize select element with jQuer
 
 ## Default settings
 
-syntax: '$("select").CoreUISelect();'
+  syntax: '<div class="ik_select_link"><span class="ik_select_link_text"></span></div><div class="ik_select_block"><div class="ik_select_list"></div></div>'
+Passing custom syntax to create fake select.
+The only condition is that "ik_select_link_text" should be inside "ik_select_link" and "ik_select_list" should be inside "ik_select_block".
+Other than that any syntax can be passed to plugin.
 
----
-
-  $.CoreUISelect("reset")
-Recreates content in the dropdown.
-
----
-
+--- 
