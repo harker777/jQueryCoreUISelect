@@ -16,11 +16,10 @@ jQuery CoreUISelect is a cross browser easy to stylize select element with jQuer
 
 syntax: '$("select").CoreUISelect();'
 
---- 
-
-  autowidth: true(/false)
-Set width of the select according to the longest option.
-
 ---
 
+  $.CoreUISelect("reset")
+Recreates content in the dropdown.
+
+---
 
