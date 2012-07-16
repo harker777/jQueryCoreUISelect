@@ -13,10 +13,35 @@ jQuery CoreUISelect is a cross browser easy to stylize select element with jQuer
 * Support jScrollPane plugin for customize default scrollbar
 
 ## Default settings
+    $('#countries').CoreUISelect();
 
-  syntax: '<div class="ik_select_link"><span class="ik_select_link_text"></span></div><div class="ik_select_block"><div class="ik_select_list"></div></div>'
-Passing custom syntax to create fake select.
-The only condition is that "ik_select_link_text" should be inside "ik_select_link" and "ik_select_list" should be inside "ik_select_block".
-Other than that any syntax can be passed to plugin.
+## With jScrollPane plugin
+    $('#countries_2').CoreUISelect({
+        jScrollPane : {
+           verticalDragMinHeight: 20,
+           verticalDragMaxHeight: 20,
+           showArrows : true
+        }
+     });
+    
+## Append to body setting
+Custom dropdown build in body
 
---- 
+    $('#countries_3').CoreUISelect({
+        appendToBody : true
+    });
+
+## Callback functions
+Custom dropdown build in body
+
+    $('.b-core-ui-select__select').CoreUISelect({
+         onInit : addCoreUISelectListener,
+         onOpen : addCoreUISelectListener,
+         onClose : addCoreUISelectListener,
+         onChange : addCoreUISelectListener,
+         onDestroy : addCoreUISelectListener
+     });
+         
+     function addCoreUISelectListener(select, event){
+         console.log(el, event);
+     } 
