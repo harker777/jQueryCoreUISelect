@@ -13,10 +13,10 @@ jQuery CoreUISelect is a cross browser easy to stylize select element with jQuer
 * Support jScrollPane plugin for customize default scrollbar
 
 ## Default settings
-    $('#countries').CoreUISelect();
+    $('select').CoreUISelect();
 
 ## With jScrollPane plugin
-    $('#countries_2').CoreUISelect({
+    $('select').CoreUISelect({
         jScrollPane : {
            verticalDragMinHeight: 20,
            verticalDragMaxHeight: 20,
@@ -27,14 +27,14 @@ jQuery CoreUISelect is a cross browser easy to stylize select element with jQuer
 ## Append to body setting
 Custom dropdown build in body
 
-    $('#countries_3').CoreUISelect({
+    $('select').CoreUISelect({
         appendToBody : true
     });
 
 ## Callback functions
 Custom dropdown build in body
 
-    $('.b-core-ui-select__select').CoreUISelect({
+    $('select').CoreUISelect({
          onInit : addCoreUISelectListener,
          onOpen : addCoreUISelectListener,
          onClose : addCoreUISelectListener,
