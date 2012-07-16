@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>jQueryCoreUISelect by shaggysmile</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">jQueryCoreUISelect</h1>
+        <p class="header">jQuery CoreUISelect is a cross browser easy to stylize select element with jQuery and CSS</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/shaggysmile/jQueryCoreUISelect/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/shaggysmile/jQueryCoreUISelect/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/shaggysmile/jQueryCoreUISelect">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/shaggysmile">shaggysmile</a></p>
+
+
+      </header>
+      <section>
+        <h1>jQuery-CoreUISelect</h1>
+
+<p>jQuery CoreUISelect is a cross browser easy to stylize select element with jQuery and CSS</p>
+
+<h2>Available Features:</h2>
+
+<ul>
+<li>Full customization</li>
+<li>Automatic calculations</li>
+<li>Keyboard support</li>
+<li>Powerful callback functions</li>
+<li>Compatible with mobile devices</li>
+<li>Support jScrollPane plugin for customize default scrollbar</li>
+</ul><h2>Default settings</h2>
+
+<pre><code>$('#countries').CoreUISelect();
+</code></pre>
+
+<h2>With jScrollPane plugin</h2>
+
+<pre><code>$('#countries_2').CoreUISelect({
+    jScrollPane : {
+       verticalDragMinHeight: 20,
+       verticalDragMaxHeight: 20,
+       showArrows : true
+    }
+ });
+</code></pre>
+
+<h2>Append to body setting</h2>
+
+<p>Custom dropdown build in body</p>
+
+<pre><code>$('#countries_3').CoreUISelect({
+    appendToBody : true
+});
+</code></pre>
+
+<h2>Callback functions</h2>
+
+<p>Custom dropdown build in body</p>
+
+<pre><code>$('.b-core-ui-select__select').CoreUISelect({
+     onInit : addCoreUISelectListener,
+     onOpen : addCoreUISelectListener,
+     onClose : addCoreUISelectListener,
+     onChange : addCoreUISelectListener,
+     onDestroy : addCoreUISelectListener
+ });
+
+ function addCoreUISelectListener(select, event){
+     console.log(el, event);
+ } 
+</code></pre>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+		
+  </body>
+</html>
