@@ -13,6 +13,6 @@ jQuery CoreUISelect is a cross browser easy to stylize select element with jQuer
 * Support jScrollPane plugin for customize default scrollbar
 
 ## Default settings
-syntax: $('select').CoreUISelect();
+syntax: '$("select").CoreUISelect();'
 
 
