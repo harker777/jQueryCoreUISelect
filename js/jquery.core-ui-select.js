@@ -31,7 +31,6 @@
         }
     }
 
-
     $(document).bind('keyup', function(event){
         for(var i=0; i<allSelects.length; i++){
             if($.browser.safari) allSelects[i].changeDropdownData(event); // Hack for Safari
@@ -39,14 +38,11 @@
         }
     });
 
-
-
     $(document).bind('keypress', function(event){
         for(var i=0; i<allSelects.length; i++){
             allSelects[i].changeDropdownData(event);
         }
     });
-
 
     $(window).bind('resize', function(event){
         for(var i=0; i<allSelects.length; i++){
@@ -59,7 +55,6 @@
             allSelects[i].onDocumentMouseDown(event);
         }
     });
-
 
     $.browser.mobile = (/iphone|ipad|ipod|android/i.test(navigator.userAgent.toLowerCase()));
     $.browser.android = (/android/i.test(navigator.userAgent.toLowerCase()));
@@ -97,6 +92,7 @@
     }
 
     CoreUISelect.prototype.init = function () {
+
         if($.browser.operamini) return this;
         this.buildUI();
         this.hideDomSelect();
@@ -143,6 +139,7 @@
         // Add placeholder value by selected option
         this.setSelectValue(this.getSelectedItem().text());
         this.updateDropdownPosition();
+
         this.currentItemOfDomSelect = this.currentItemOfDomSelect || this.domSelect.find('option:selected');
 
     }
@@ -152,6 +149,7 @@
             'position' : 'absolute',
             'left' : '-9999px'
         });
+        this.currentItemOfDomSelect = this.currentItemOfDomSelect || this.domSelect.find('option:selected');
     }
 
     CoreUISelect.prototype.bindUIEvents = function () {
@@ -216,9 +214,9 @@
     }
 
     CoreUISelect.prototype.scrollToCurrentDropdownItem = function (__item) {
+
         if(this.dropdownWrapper.data('jsp')) {
             this.dropdownWrapper.data('jsp').scrollToElement(__item);
-            return;
         }
         // Alternative scroll to element
         $(this.dropdownWrapper)
@@ -318,7 +316,6 @@
             this.dropdown.width(this.select.innerWidth()-marginDifference);
             if(this.isJScrollPane) this.initJScrollPane();
         }
-        //}
     }
 
     CoreUISelect.prototype.setSelectValue = function (_text) {
