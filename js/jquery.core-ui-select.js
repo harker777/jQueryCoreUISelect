@@ -92,7 +92,6 @@
     }
 
     CoreUISelect.prototype.init = function () {
-
         if($.browser.operamini) return this;
         this.buildUI();
         this.hideDomSelect();
@@ -198,13 +197,19 @@
             this.dropdown.removeClass('show').addClass('hide');
             this.settings.onClose && this.settings.onClose.apply(this, [this.domSelect, 'close']);
         } else {
-            if(this.isSelectFocus) this.domSelect.blur();
+            if(this.isSelectFocus) {
+                this.domSelect.focus();
+            }
         }
     }
 
     CoreUISelect.prototype.hideAllDropdown = function () {
         for(var i in allSelects) {
-            if(allSelects[i].hasOwnProperty(i)) allSelects.dropdown.addClass('hide').removeClass('show');
+            if(allSelects[i].hasOwnProperty(i)) {
+                allSelects.dropdown.isSelectShow = false;
+                allSelects.dropdown.domSelect.blur();
+                allSelects.dropdown.addClass('hide').removeClass('show');
+            }
         }
     }
 
