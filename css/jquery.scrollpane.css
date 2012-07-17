@@ -1,3 +1,4 @@
+
 .jspContainer {
     overflow: hidden;
     position: relative;
@@ -8,6 +9,7 @@
 .jspPane {
     position: absolute;
     width: 100% !important;
+    outline: none;
 }
 
 .jspVerticalBar {
