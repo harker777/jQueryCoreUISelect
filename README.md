@@ -26,8 +26,7 @@ See demo: http://shaggysmile.github.com/jQueryCoreUISelect/
         }
      });
     
-## Append to body setting
-Custom dropdown build in body
+## Append to body
 
     $('select').CoreUISelect({
         appendToBody : true
@@ -47,3 +46,7 @@ Custom dropdown build in body
      function addCoreUISelectListener(select, event){
          console.log(el, event);
      } 
+	 
+## API
+    $('select').CoreUISelect('update');
+    $('select').CoreUISelect('destroy'); 	
