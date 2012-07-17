@@ -144,11 +144,10 @@
     }
 
     CoreUISelect.prototype.hideDomSelect = function () {
-        this.domSelect.css({
+        /*this.domSelect.css({
             'position' : 'absolute',
             'left' : '-9999px'
-        });
-        this.currentItemOfDomSelect = this.currentItemOfDomSelect || this.domSelect.find('option:selected');
+        });*/
     }
 
     CoreUISelect.prototype.bindUIEvents = function () {
