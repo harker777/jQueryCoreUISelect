@@ -77,6 +77,7 @@
         {
             select : {
                 container : '<div class="b-core-ui-select"></div>',
+    			wrapper : '<div class="b-core-ui-select__wrap"></div>',
                 value : '<span class="b-core-ui-select__value"></span>',
                 button : '<span class="b-core-ui-select__button"></span>'
             },
@@ -116,13 +117,15 @@
         // TODO Add custom states for button
         this.selectButton = $(this.templates.select.button)
             .appendTo(this.select);
+			
+		this.domSelect.wrap($(this.templates.select.wrapper));
 
         // Build dropdown container
         this.dropdown = $(this.templates.dropdown.container);
         this.dropdownWrapper =  $(this.templates.dropdown.wrapper)
             .appendTo(this.dropdown);
 
-        this.settings.appendToBody ? this.dropdown.appendTo($('body')) : this.dropdown.insertBefore(this.domSelect);
+        this.settings.appendToBody ? this.dropdown.appendTo($('body')) : this.dropdown.insertBefore(this.domSelect.parent());
 
         // Build dropdown
         this.domSelect.find('option')
@@ -144,10 +147,11 @@
     }
 
     CoreUISelect.prototype.hideDomSelect = function () {
-        /*this.domSelect.css({
+        this.domSelect.css({
             'position' : 'absolute',
             'left' : '-9999px'
-        });*/
+        });
+        this.currentItemOfDomSelect = this.currentItemOfDomSelect || this.domSelect.find('option:selected');
     }
 
     CoreUISelect.prototype.bindUIEvents = function () {
