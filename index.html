@@ -839,17 +839,17 @@
         });
 
         $('#countries_4').сoreUISelect({
-            onInit                  : addсoreUISelectListener,
-            onFocus                 : addсoreUISelectListener,
-            onBlur                  : addсoreUISelectListener,
-            onOpen                  : addсoreUISelectListener,
-            onClose                 : addсoreUISelectListener,
-            onChange                : addсoreUISelectListener,
-            onDestroy               : addсoreUISelectListener
+            onInit                  : addCoreUISelectListener,
+            onFocus                 : addCoreUISelectListener,
+            onBlur                  : addCoreUISelectListener,
+            onOpen                  : addCoreUISelectListener,
+            onClose                 : addCoreUISelectListener,
+            onChange                : addCoreUISelectListener,
+            onDestroy               : addCoreUISelectListener
         });
 
-        function addсoreUISelectListener(select, event){
-            console.log(el, event)
+        function addCoreUISelectListener(select, event){
+            console.log(select, event)
         }
 
     });
