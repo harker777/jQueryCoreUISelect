@@ -176,11 +176,11 @@
     }
 
     CoreUISelect.prototype.showDropdown = function () {
+        if($.browser.mobile && !$.browser.android){
+            this.domSelect.focus();
+            return this;
+        }
         if(!this.isSelectShow) {
-            if($.browser.mobile && !$.browser.android){
-                this.domSelect.focus();
-                return this;
-            }
             this.domSelect.focus();
             this.isSelectShow = true;
             this.dropdown.addClass('show').removeClass('hide');
