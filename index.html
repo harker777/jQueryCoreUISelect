@@ -13,10 +13,11 @@
     <h1 class="b-content__title">
         jQuery CoreUISelect
     </h1>
-
-    <p>jQuery CoreUISelect is a cross browser easy to stylize select element with jQuery and CSS</p>
-
-    <h2>Available Features:</h2>
+    
+	<p>jQuery CoreUISelect is a cross browser easy to stylize select element with jQuery and CSS</p>
+	<p><a href="https://github.com/shaggysmile/jQueryCoreUISelect">GitHub Page</a><br><a href="https://github.com/shaggysmile/jQueryCoreUISelect/zipball/master">Download ZIP</a></p>
+    
+	<h2>Available Features:</h2>
     <ul>
         <li>Full customization</li>
         <li>Automatic calculations</li>
@@ -794,7 +795,7 @@
         </select>
     </div>
 
-    <h2>Callback functions</h2>
+    <h2>Callback functions and API</h2>
     <pre class="b-code-block">
         <code>$('.b-core-ui-select__select').CoreUISelect({</code>
         <code>    onInit : addCoreUISelectListener,</code>
@@ -808,6 +809,11 @@
         <code>    console.log(el, event);</code>
         <code>}</code>
     </pre>
+
+    <pre class="b-code-block">
+        <code>$('.b-core-ui-select__select').CoreUISelect('update')</code>
+		<code>$('.b-core-ui-select__select').CoreUISelect('destroy')</code>
+    </pre>	
 
 </div>
 
@@ -841,9 +847,6 @@
             onChange                : addCoreUISelectListener,
             onDestroy               : addCoreUISelectListener
         });
-
-        //$('.b-core-ui-select__select').CoreUISelect('update');
-        //$('.b-core-ui-select__select').CoreUISelect('destroy');
 
         function addCoreUISelectListener(select, event){
             console.log(el, event)
