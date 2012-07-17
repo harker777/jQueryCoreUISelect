@@ -194,13 +194,8 @@
 
     CoreUISelect.prototype.hideDropdown = function () {
         if(this.isSelectShow) {
-            if($.browser.mobile && !$.browser.android){
-                this.domSelect.blur();
-                return this;
-            }
             this.isSelectShow = false;
             this.dropdown.removeClass('show').addClass('hide');
-            this.domSelect.focus();
             this.settings.onClose && this.settings.onClose.apply(this, [this.domSelect, 'close']);
         } else {
             if(this.isSelectFocus) this.domSelect.blur();
@@ -265,6 +260,7 @@
         if(!this.isDocumentMouseDown) {
             this.isSelectFocus = false;
             this.select.removeClass('focus');
+            this.hideDropdown();
             this.settings.onBlur && this.settings.onBlur.apply(this, [this.domSelect, 'blur']);
         }
     }
