@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>jQuery CoreUISelect</title>
+    <title>jQuery сoreUISelect</title>
     <meta charset="utf-8">
     <link href="css/core.css" media="screen" rel="stylesheet" type="text/css">
     <link href="css/core-ui-select.css" media="screen" rel="stylesheet" type="text/css">
@@ -11,10 +11,10 @@
 
 <div class="b-content">
     <h1 class="b-content__title">
-        jQuery CoreUISelect
+        jQuery сoreUISelect
     </h1>
     
-	<p>jQuery CoreUISelect is a cross browser easy to stylize select element with jQuery and CSS</p>
+	<p>jQuery сoreUISelect is a cross browser easy to stylize select element with jQuery and CSS</p>
 	<p><a href="https://github.com/shaggysmile/jQueryCoreUISelect">GitHub Page</a><br><a href="https://github.com/shaggysmile/jQueryCoreUISelect/zipball/master">Download ZIP</a></p>
     
 	<h2>Available Features:</h2>
@@ -29,7 +29,7 @@
 
     <h2>Default settings</h2>
     <pre class="b-code-block">
-        <code>$('#countries').CoreUISelect();</code>
+        <code>$('#countries').сoreUISelect();</code>
     </pre>
     <div class="b-row">
         <label for="countries">Select country</label>
@@ -282,7 +282,7 @@
 
     <h2>With jScrollPane plugin</h2>
     <pre class="b-code-block">
-        <code>$('#countries_2').CoreUISelect({</code>
+        <code>$('#countries_2').сoreUISelect({</code>
         <code>    jScrollPane : {</code>
         <code>        verticalDragMinHeight: 20,</code>
         <code>        verticalDragMaxHeight: 20,</code>
@@ -542,7 +542,7 @@
     <h2>Append to body setting</h2>
     <p>Custom dropdown build in body</p>
     <pre class="b-code-block">
-        <code>$('#countries_3').CoreUISelect({</code>
+        <code>$('#countries_3').сoreUISelect({</code>
         <code>    appendToBody : true</code>
         <code>});</code>
     </pre>
@@ -797,22 +797,22 @@
 
     <h2>Callback functions and API</h2>
     <pre class="b-code-block">
-        <code>$('.b-core-ui-select__select').CoreUISelect({</code>
-        <code>    onInit : addCoreUISelectListener,</code>
-        <code>    onOpen : addCoreUISelectListener,</code>
-        <code>    onClose : addCoreUISelectListener,</code>
-        <code>    onChange : addCoreUISelectListener,</code>
-        <code>    onDestroy : addCoreUISelectListener</code>
+        <code>$('.b-core-ui-select__select').сoreUISelect({</code>
+        <code>    onInit : addсoreUISelectListener,</code>
+        <code>    onOpen : addсoreUISelectListener,</code>
+        <code>    onClose : addсoreUISelectListener,</code>
+        <code>    onChange : addсoreUISelectListener,</code>
+        <code>    onDestroy : addсoreUISelectListener</code>
         <code>});</code>
         <code>&nbsp;</code>
-        <code>function addCoreUISelectListener(select, event){</code>
+        <code>function addсoreUISelectListener(select, event){</code>
         <code>    console.log(el, event);</code>
         <code>}</code>
     </pre>
 
     <pre class="b-code-block">
-        <code>$('.b-core-ui-select__select').CoreUISelect('update')</code>
-		<code>$('.b-core-ui-select__select').CoreUISelect('destroy')</code>
+        <code>$('.b-core-ui-select__select').сoreUISelect('update')</code>
+		<code>$('.b-core-ui-select__select').сoreUISelect('destroy')</code>
     </pre>	
 
 </div>
@@ -824,9 +824,9 @@
 <script>
     $(document).ready(function () {
 
-        $('#countries').CoreUISelect();
+        $('#countries').сoreUISelect();
 
-        $('#countries_2').CoreUISelect({
+        $('#countries_2').сoreUISelect({
             jScrollPane : {
                 verticalDragMinHeight: 20,
                 verticalDragMaxHeight: 20,
@@ -834,21 +834,21 @@
             }
         });
 
-        $('#countries_3').CoreUISelect({
+        $('#countries_3').сoreUISelect({
             appendToBody            : true
         });
 
-        $('#countries_4').CoreUISelect({
-            onInit                  : addCoreUISelectListener,
-            onFocus                 : addCoreUISelectListener,
-            onBlur                  : addCoreUISelectListener,
-            onOpen                  : addCoreUISelectListener,
-            onClose                 : addCoreUISelectListener,
-            onChange                : addCoreUISelectListener,
-            onDestroy               : addCoreUISelectListener
+        $('#countries_4').сoreUISelect({
+            onInit                  : addсoreUISelectListener,
+            onFocus                 : addсoreUISelectListener,
+            onBlur                  : addсoreUISelectListener,
+            onOpen                  : addсoreUISelectListener,
+            onClose                 : addсoreUISelectListener,
+            onChange                : addсoreUISelectListener,
+            onDestroy               : addсoreUISelectListener
         });
 
-        function addCoreUISelectListener(select, event){
+        function addсoreUISelectListener(select, event){
             console.log(el, event)
         }
 

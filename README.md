@@ -1,7 +1,7 @@
-jQuery CoreUISelect
+jQuery coreUISelect
 ===================
 
-jQuery CoreUISelect is a cross browser easy to stylize select element with jQuery and CSS
+jQuery coreUISelect is a cross browser easy to stylize select element with jQuery and CSS
 
 ## Available Features:
 
@@ -15,10 +15,10 @@ jQuery CoreUISelect is a cross browser easy to stylize select element with jQuer
 See demo: http://shaggysmile.github.com/jQueryCoreUISelect/
 
 ## Default settings
-    $('select').CoreUISelect();
+    $('select').coreUISelect();
 
 ## With jScrollPane plugin
-    $('select').CoreUISelect({
+    $('select').coreUISelect({
         jScrollPane : {
            verticalDragMinHeight: 20,
            verticalDragMaxHeight: 20,
@@ -28,14 +28,14 @@ See demo: http://shaggysmile.github.com/jQueryCoreUISelect/
     
 ## Append to body
 
-    $('select').CoreUISelect({
+    $('select').coreUISelect({
         appendToBody : true
     });
 
 ## Callback functions
 Custom dropdown build in body
 
-    $('select').CoreUISelect({
+    $('select').coreUISelect({
          onInit : addCoreUISelectListener,
          onOpen : addCoreUISelectListener,
          onClose : addCoreUISelectListener,
@@ -44,9 +44,9 @@ Custom dropdown build in body
      });
          
      function addCoreUISelectListener(select, event){
-         console.log(el, event);
+         console.log(select, event);
      } 
 	 
 ## API
-    $('select').CoreUISelect('update');
-    $('select').CoreUISelect('destroy'); 	
+    $('select').coreUISelect('update');
+    $('select').coreUISelect('destroy');

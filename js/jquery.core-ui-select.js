@@ -114,7 +114,7 @@
         this.selectValue = $(this.templates.select.value)
             .appendTo(this.select);
 
-        // TODO Add custom states
+        // TODO Add custom states for button
         this.selectButton = $(this.templates.select.button)
             .appendTo(this.select);
 
@@ -182,12 +182,12 @@
                 this.domSelect.focus();
                 return this;
             }
+            this.domSelect.focus();
             this.isSelectShow = true;
             this.dropdown.addClass('show').removeClass('hide');
             if(this.isJScrollPane) this.initJScrollPane();
             this.scrollToCurrentDropdownItem(this.dropdownItem.eq(this.currentItemOfDomSelect.index()));
             this.updateDropdownPosition();
-            this.domSelect.focus();
             this.settings.onOpen && this.settings.onOpen.apply(this, [this.domSelect, 'open']);
         }
     }
@@ -254,6 +254,7 @@
     }
 
     CoreUISelect.prototype.onFocus = function () {
+        this.isDocumentMouseDown = false;
         this.isSelectFocus = true;
         this.select.addClass('focus');
         this.settings.onFocus && this.settings.onFocus.apply(this, [this.domSelect, 'focus']);
@@ -358,15 +359,15 @@
     }
 
 
-    $.fn.CoreUISelect = function (__options, __templates) {
+    $.fn.сoreUISelect = function (__options, __templates) {
 
         return this.each(function () {
-            var select = $(this).data('CoreUISelect');
+            var select = $(this).data('сoreUISelect');
             if(select){
                 __options = (typeof __options == "string" && select[__options]) ? __options : 'update';
                 select[__options].apply(select);
                 if(__options == 'destroy') {
-                    $(this).removeData('CoreUISelect');
+                    $(this).removeData('сoreUISelect');
                     for(var i=0; i<allSelects.length; i++) {
                         if(allSelects[i] == select) {
                             allSelects.splice(i, 1);
