@@ -96,10 +96,7 @@
 .b-core-ui-select__dropdown__wrap {
     max-height: 200px;
     overflow: auto;
-<<<<<<< HEAD
-=======
 	outline: none;
->>>>>>> dfec69e4a54b0956e18d9440745ddbc91d3bc627
 }
 
 .j-scroll-pane .b-core-ui-select__dropdown__item {
