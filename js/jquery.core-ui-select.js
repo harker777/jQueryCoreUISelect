@@ -60,6 +60,11 @@
         }
     });
 
+
+    $.browser.mobile = (/iphone|ipad|ipod|android/i.test(navigator.userAgent.toLowerCase()));
+    $.browser.android = (/android/i.test(navigator.userAgent.toLowerCase()));
+    $.browser.operamini = Object.prototype.toString.call(window.operamini) === "[object OperaMini]";
+
     /**
      * CoreUISelect - stylized standard select
      * @constructor
@@ -92,7 +97,9 @@
     }
 
     CoreUISelect.prototype.init = function () {
+        if($.browser.operamini) return this;
         this.buildUI();
+        this.hideDomSelect();
         if(this.domSelect.is(':disabled')) {
             this.select.addClass('disabled');
         } else {
@@ -101,7 +108,6 @@
             this.settings.onInit && this.settings.onInit.apply(this, [this.domSelect, 'init']);
         }
     }
-
 
     CoreUISelect.prototype.buildUI = function () {
 
@@ -137,9 +143,15 @@
         // Add placeholder value by selected option
         this.setSelectValue(this.getSelectedItem().text());
         this.updateDropdownPosition();
-
         this.currentItemOfDomSelect = this.currentItemOfDomSelect || this.domSelect.find('option:selected');
 
+    }
+
+    CoreUISelect.prototype.hideDomSelect = function () {
+        this.domSelect.css({
+            'position' : 'absolute',
+            'left' : '-9999px'
+        });
     }
 
     CoreUISelect.prototype.bindUIEvents = function () {
@@ -149,7 +161,6 @@
         this.domSelect.bind('change', $.proxy(this, 'changeDropdownData'));
         this.select.bind('click', $.proxy(this, 'onSelectClick'));
         this.dropdownItem.bind('click', $.proxy(this, 'onDropdownItemClick'));
-
     }
 
     CoreUISelect.prototype.buildJScrollPane = function () {
@@ -169,6 +180,10 @@
 
     CoreUISelect.prototype.showDropdown = function () {
         if(!this.isSelectShow) {
+            if($.browser.mobile && !$.browser.android){
+                this.domSelect.focus();
+                return this;
+            }
             this.isSelectShow = true;
             this.dropdown.addClass('show').removeClass('hide');
             if(this.isJScrollPane) this.initJScrollPane();
@@ -181,6 +196,10 @@
 
     CoreUISelect.prototype.hideDropdown = function () {
         if(this.isSelectShow) {
+            if($.browser.mobile && !$.browser.android){
+                this.domSelect.blur();
+                return this;
+            }
             this.isSelectShow = false;
             this.dropdown.removeClass('show').addClass('hide');
             this.domSelect.focus();
@@ -197,17 +216,14 @@
     }
 
     CoreUISelect.prototype.scrollToCurrentDropdownItem = function (__item) {
-
         if(this.dropdownWrapper.data('jsp')) {
             this.dropdownWrapper.data('jsp').scrollToElement(__item);
             return;
         }
-
         // Alternative scroll to element
         $(this.dropdownWrapper)
             .scrollTop($(this.dropdownWrapper)
             .scrollTop() + __item.position().top - $(this.dropdownWrapper).height()/2 + __item.height()/2);
-
     }
 
     CoreUISelect.prototype.changeDropdownData = function () {
@@ -219,11 +235,9 @@
             this.setSelectValue(this.currentItemOfDomSelect.text());
             this.settings.onChange && this.settings.onChange.apply(this, [this.domSelect, 'change']);
         }
-
     }
 
     CoreUISelect.prototype.addListenerByServicesKey = function (event) {
-        // TODO Other keyboard button
         if(this.isSelectShow) {
             switch (event.which) {
                 case 9:   // TAB
@@ -296,9 +310,7 @@
                 'left' : this.select.offset().left,
                 'z-index' : '9999'
             });
-
             var marginDifference = 0;
-
             if(parseFloat(this.dropdown.css('margin-left'))!=0) marginDifference+=parseFloat(this.dropdown.css('margin-left'))
             if(parseFloat(this.dropdown.css('margin-right'))!=0) marginDifference+=parseFloat(this.dropdown.css('margin-right')) ;
             if(parseFloat(this.dropdown.css('padding-right'))!=0) marginDifference+=parseFloat(this.dropdown.css('padding-right'));
