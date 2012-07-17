@@ -46,6 +46,11 @@
     transition: background-position 0.1s linear;
 }
 
+.b-core-ui-select__select {
+    position: absolute;
+    left: -9999px;
+}
+
 .b-core-ui-select__button {
     position: absolute;
     right: 15px;
@@ -91,7 +96,10 @@
 .b-core-ui-select__dropdown__wrap {
     max-height: 200px;
     overflow: auto;
-    outline: none;
+<<<<<<< HEAD
+=======
+	outline: none;
+>>>>>>> dfec69e4a54b0956e18d9440745ddbc91d3bc627
 }
 
 .j-scroll-pane .b-core-ui-select__dropdown__item {
