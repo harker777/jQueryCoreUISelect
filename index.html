@@ -823,9 +823,7 @@
 <script src="js/jquery.core-ui-select.js"></script>
 <script>
     $(document).ready(function () {
-
         $('#countries').сoreUISelect();
-
         $('#countries_2').сoreUISelect({
             jScrollPane : {
                 verticalDragMinHeight: 20,
@@ -833,25 +831,7 @@
                 showArrows : true
             }
         });
-
-        $('#countries_3').сoreUISelect({
-            appendToBody            : true
-        });
-
-        $('#countries_4').сoreUISelect({
-            onInit                  : addCoreUISelectListener,
-            onFocus                 : addCoreUISelectListener,
-            onBlur                  : addCoreUISelectListener,
-            onOpen                  : addCoreUISelectListener,
-            onClose                 : addCoreUISelectListener,
-            onChange                : addCoreUISelectListener,
-            onDestroy               : addCoreUISelectListener
-        });
-
-        function addCoreUISelectListener(select, event){
-            console.log(select, event)
-        }
-
+        $('#countries_3').сoreUISelect({ appendToBody : true });
     });
 </script>
 
