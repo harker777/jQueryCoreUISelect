@@ -38,7 +38,7 @@
         }
     });
 
-    $(document).bind('keypress', function(event){
+    $(document).bind($.browser.safari && !$.browser.opera ? 'keydown' : 'keypress', function(event){
         for(var i=0; i<allSelects.length; i++){
             allSelects[i].changeDropdownData(event);
         }
@@ -56,8 +56,7 @@
         }
     });
 
-    $.browser.mobile = (/iphone|ipad|ipod|android/i.test(navigator.userAgent.toLowerCase()));
-    $.browser.android = (/android/i.test(navigator.userAgent.toLowerCase()));
+    $.browser.idevice = (/iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase()));
     $.browser.operamini = Object.prototype.toString.call(window.operamini) === "[object OperaMini]";
 
     /**
@@ -77,11 +76,9 @@
         {
             select : {
                 container : '<div class="b-core-ui-select"></div>',
-				wrapper : '<div class="b-core-ui-select__wrap"></div>',
                 value : '<span class="b-core-ui-select__value"></span>',
                 button : '<span class="b-core-ui-select__button"></span>'
             },
-
             dropdown : {
                 container : '<div class="b-core-ui-select__dropdown"></div>',
                 wrapper : '<ul class="b-core-ui-select__dropdown__wrap"></ul>',
@@ -93,16 +90,28 @@
     }
 
     CoreUISelect.prototype.init = function () {
+
         if($.browser.operamini) return this;
+
         this.buildUI();
         this.hideDomSelect();
+
         if(this.domSelect.is(':disabled')) {
             this.select.addClass('disabled');
-        } else {
-            this.bindUIEvents();
-            if(this.isJScrollPane) this.buildJScrollPane();
-            this.settings.onInit && this.settings.onInit.apply(this, [this.domSelect, 'init']);
+            return this;
         }
+
+        if(this.isJScrollPane) this.buildJScrollPane();
+
+        this.bindUIEvents();
+
+        if($.browser.idevice) {
+            this.simulateShowedDomSelect();
+            return this;
+        }
+
+        this.settings.onInit && this.settings.onInit.apply(this, [this.domSelect, 'init']);
+
     }
 
     CoreUISelect.prototype.buildUI = function () {
@@ -117,8 +126,6 @@
         // TODO Add custom states for button
         this.selectButton = $(this.templates.select.button)
             .appendTo(this.select);
-			
-		this.domSelect.wrap($(this.templates.select.wrapper));
 
         // Build dropdown container
         this.dropdown = $(this.templates.dropdown.container);
@@ -147,20 +154,43 @@
     }
 
     CoreUISelect.prototype.hideDomSelect = function () {
-        this.domSelect.css({
+        this.domSelect.addClass('b-core-ui-select__select_state_hide');
+    }
+
+    CoreUISelect.prototype.showDomSelect = function () {
+        this.domSelect.removeClass('b-core-ui-select__select_state_hide') ;
+    }
+
+    CoreUISelect.prototype.simulateShowedDomSelect = function () {
+        this.domSelect.css(
+        {
             'position' : 'absolute',
-            'left' : '-9999px'
-        });
-        this.currentItemOfDomSelect = this.currentItemOfDomSelect || this.domSelect.find('option:selected');
+            'top' : this.select.offset().top,
+            'left' : this.select.offset().left,
+            'height' : this.select.height(),
+            'width' : this.select.width(),
+            'opacity' : 0
+        })
     }
 
     CoreUISelect.prototype.bindUIEvents = function () {
         // Bind plugin elements
         this.domSelect.bind('focus', $.proxy(this, 'onFocus'));
         this.domSelect.bind('blur', $.proxy(this, 'onBlur'));
-        this.domSelect.bind('change', $.proxy(this, 'changeDropdownData'));
         this.select.bind('click', $.proxy(this, 'onSelectClick'));
         this.dropdownItem.bind('click', $.proxy(this, 'onDropdownItemClick'));
+    }
+
+    CoreUISelect.prototype.scrollToCurrentDropdownItem = function (__item) {
+
+        if(this.dropdownWrapper.data('jsp')) {
+            this.dropdownWrapper.data('jsp').scrollToElement(__item);
+            return this;
+        }
+        // Alternative scroll to element
+        $(this.dropdownWrapper)
+            .scrollTop($(this.dropdownWrapper)
+            .scrollTop() + __item.position().top - $(this.dropdownWrapper).height()/2 + __item.height()/2);
     }
 
     CoreUISelect.prototype.buildJScrollPane = function () {
@@ -179,18 +209,15 @@
     }
 
     CoreUISelect.prototype.showDropdown = function () {
-        if($.browser.mobile && !$.browser.android){
-            this.domSelect.focus();
-            return this;
-        }
+        this.domSelect.focus();
+        this.settings.onOpen && this.settings.onOpen.apply(this, [this.domSelect, 'open']);
+        if($.browser.idevice) return this;
         if(!this.isSelectShow) {
-            this.domSelect.focus();
             this.isSelectShow = true;
             this.dropdown.addClass('show').removeClass('hide');
             if(this.isJScrollPane) this.initJScrollPane();
             this.scrollToCurrentDropdownItem(this.dropdownItem.eq(this.currentItemOfDomSelect.index()));
             this.updateDropdownPosition();
-            this.settings.onOpen && this.settings.onOpen.apply(this, [this.domSelect, 'open']);
         }
     }
 
@@ -216,24 +243,23 @@
         }
     }
 
-    CoreUISelect.prototype.scrollToCurrentDropdownItem = function (__item) {
 
-        if(this.dropdownWrapper.data('jsp')) {
-            this.dropdownWrapper.data('jsp').scrollToElement(__item);
-        }
-        // Alternative scroll to element
-        $(this.dropdownWrapper)
-            .scrollTop($(this.dropdownWrapper)
-            .scrollTop() + __item.position().top - $(this.dropdownWrapper).height()/2 + __item.height()/2);
-    }
 
     CoreUISelect.prototype.changeDropdownData = function () {
         if(this.isSelectShow || this.isSelectFocus) {
+            this.prevItemOfDomSelect = this.currentItemOfDomSelect;
             this.currentItemOfDomSelect = this.domSelect.find('option:selected');
             this.dropdownItem.removeClass("selected");
             this.dropdownItem.eq(this.currentItemOfDomSelect.index()).addClass("selected");
             this.scrollToCurrentDropdownItem(this.dropdownItem.eq(this.currentItemOfDomSelect.index()));
             this.setSelectValue(this.currentItemOfDomSelect.text());
+            this.onDomSelectChange();
+        }
+    }
+
+    CoreUISelect.prototype.onDomSelectChange = function () {
+        if(this.prevItemOfDomSelect.val()!=this.currentItemOfDomSelect.val()) {
+            dispatchEvent(this.domSelect.get(0), 'change');
             this.settings.onChange && this.settings.onChange.apply(this, [this.domSelect, 'change']);
         }
     }
@@ -268,26 +294,22 @@
         if(!this.isDocumentMouseDown) {
             this.isSelectFocus = false;
             this.select.removeClass('focus');
-            this.hideDropdown();
             this.settings.onBlur && this.settings.onBlur.apply(this, [this.domSelect, 'blur']);
+            this.hideDropdown();
         }
     }
 
     CoreUISelect.prototype.onDropdownItemClick = function (event) {
         var item = $(event.currentTarget);
         if(!(item.hasClass('disabled') || item.hasClass('selected'))) {
-
             this.domSelect.find('option').removeAttr('selected');
             this.domSelect.find('option').eq(item.index()).attr('selected', true);
-
             this.dropdownItem.removeClass('selected');
             this.dropdownItem.eq(item.index()).addClass('selected');
-
-            dispatchEvent(this.domSelect.get(0), 'change');
-
-            this.settings.onChange && this.settings.onChange.apply(this, [this.domSelect, 'change']);
+            this.prevItemOfDomSelect = this.domSelect.find('option:selected');
+            this.setSelectValue(this.getSelectedItem().text());
+            this.onDomSelectChange();
         }
-
         this.hideDropdown();
         return false;
     }
@@ -301,7 +323,6 @@
                 this.hideDropdown();
             }
         }
-
         return false;
     }
 
@@ -336,7 +357,6 @@
             item.addClass('selected');
             el.attr('selected', 'selected');
         }
-        // Append items to dom
         item.appendTo(this.dropdownWrapper);
     }
 
@@ -350,6 +370,7 @@
     }
 
     CoreUISelect.prototype.destroy = function () {
+
         // Unbind plugin elements
         this.domSelect.unbind('focus', $.proxy(this, 'onFocus'));
         this.domSelect.unbind('blur', $.proxy(this, 'onBlur'));
@@ -359,17 +380,18 @@
         // Remove select container
         this.select.remove();
         this.dropdown.remove();
+        this.showDomSelect();
         this.settings.onDestroy && this.settings.onDestroy.apply(this, [this.domSelect, 'destroy']);
     }
 
 
     $.fn.сoreUISelect = function (__options, __templates) {
-
         return this.each(function () {
             var select = $(this).data('сoreUISelect');
             if(select){
                 __options = (typeof __options == "string" && select[__options]) ? __options : 'update';
                 select[__options].apply(select);
+
                 if(__options == 'destroy') {
                     $(this).removeData('сoreUISelect');
                     for(var i=0; i<allSelects.length; i++) {
@@ -382,7 +404,7 @@
             } else {
                 select = new CoreUISelect($(this), __options, __templates);
                 allSelects.push(select);
-                $(this).data('CoreUISelect', select);
+                $(this).data('сoreUISelect', select);
             }
 
         });
