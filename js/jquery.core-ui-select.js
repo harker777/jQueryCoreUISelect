@@ -56,7 +56,7 @@
         }
     });
 
-    $.browser.idevice = (/iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase()));
+    $.browser.mobile = (/iphone|ipad|ipod|android/i.test(navigator.userAgent.toLowerCase()));
     $.browser.operamini = Object.prototype.toString.call(window.operamini) === "[object OperaMini]";
 
     /**
@@ -105,7 +105,7 @@
 
         this.bindUIEvents();
 
-        if($.browser.idevice) {
+        if($.browser.mobile) {
             this.simulateShowedDomSelect();
             return this;
         }
@@ -167,9 +167,10 @@
             'position' : 'absolute',
             'top' : this.select.offset().top,
             'left' : this.select.offset().left,
-            'height' : this.select.height(),
+            'height' : 0,
             'width' : this.select.width(),
-            'opacity' : 0
+            'opacity' : 0,
+            'z-index' : -1
         })
     }
 
@@ -177,6 +178,8 @@
         // Bind plugin elements
         this.domSelect.bind('focus', $.proxy(this, 'onFocus'));
         this.domSelect.bind('blur', $.proxy(this, 'onBlur'));
+
+        if( $.browser.mobile) this.domSelect.bind('change', $.proxy(this, 'changeDropdownData'));
         this.select.bind('click', $.proxy(this, 'onSelectClick'));
         this.dropdownItem.bind('click', $.proxy(this, 'onDropdownItemClick'));
     }
@@ -211,7 +214,7 @@
     CoreUISelect.prototype.showDropdown = function () {
         this.domSelect.focus();
         this.settings.onOpen && this.settings.onOpen.apply(this, [this.domSelect, 'open']);
-        if($.browser.idevice) return this;
+        if($.browser.mobile) return this;
         if(!this.isSelectShow) {
             this.isSelectShow = true;
             this.dropdown.addClass('show').removeClass('hide');
@@ -243,10 +246,8 @@
         }
     }
 
-
-
-    CoreUISelect.prototype.changeDropdownData = function () {
-        if(this.isSelectShow || this.isSelectFocus) {
+    CoreUISelect.prototype.changeDropdownData = function (event) {
+        if((this.isSelectShow || this.isSelectFocus)) {
             this.prevItemOfDomSelect = this.currentItemOfDomSelect;
             this.currentItemOfDomSelect = this.domSelect.find('option:selected');
             this.dropdownItem.removeClass("selected");
@@ -255,10 +256,11 @@
             this.setSelectValue(this.currentItemOfDomSelect.text());
             this.onDomSelectChange();
         }
+        if( $.browser.mobile) this.settings.onChange && this.settings.onChange.apply(this, [this.domSelect, 'change']);;
     }
 
     CoreUISelect.prototype.onDomSelectChange = function () {
-        if(this.prevItemOfDomSelect.val()!=this.currentItemOfDomSelect.val()) {
+        if(this.prevItemOfDomSelect.val()!=this.currentItemOfDomSelect.val() && !$.browser.mobile) {
             dispatchEvent(this.domSelect.get(0), 'change');
             this.settings.onChange && this.settings.onChange.apply(this, [this.domSelect, 'change']);
         }
