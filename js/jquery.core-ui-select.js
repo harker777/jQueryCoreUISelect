@@ -122,15 +122,15 @@
 
     CoreUISelect.prototype.simulateShowedDomSelect = function () {
         this.domSelect.css(
-        {
-            'position' : 'absolute',
-            'top' : this.select.offset().top,
-            'left' : this.select.offset().left,
-            'height' : 0,
-            'width' : this.select.width(),
-            'opacity' : 0,
-            'z-index' : -1
-        });
+            {
+                'position' : 'absolute',
+                'top' : this.select.offset().top,
+                'left' : this.select.offset().left,
+                'height' : 0,
+                'width' : this.select.innerWidth(),
+                'opacity' : 0,
+                'z-index' : -1
+            });
         return this;
     }
 
@@ -247,6 +247,7 @@
         this.isDocumentMouseDown = false;
         this.isSelectFocus = true;
         this.select.addClass('focus');
+        this.simulateShowedDomSelect();
         this.settings.onFocus && this.settings.onFocus.apply(this, [this.domSelect, 'focus']);
 
     }
@@ -291,8 +292,8 @@
         if(this.isSelectShow) {
             this.dropdown.css({
                 'position' : 'absolute',
-                'top' : this.select.offset().top+this.select.innerHeight(),
-                'left' : this.select.offset().left,
+                'top' : this.select.position().top+this.select.innerHeight(),
+                'left' : this.select.position().left,
                 'z-index' : '9999'
             });
             var marginDifference = 0;

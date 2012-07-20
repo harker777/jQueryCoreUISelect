@@ -34,7 +34,7 @@
 .b-core-ui-select__select_state_hide {
     position: absolute;
     left: -9999px;
-    opacity: 0;
+    opacity: 1;
 }
 
 .b-core-ui-select:HOVER {
