@@ -130,7 +130,7 @@
                 'position' : 'absolute',
                 'top' : this.select.position().top,
                 'left' : this.select.position().left,
-                'height' : 0,
+                'height' : this.select.height(),
                 'width' : this.select.innerWidth(),
                 'opacity' : 0,
                 'z-index' : -1
