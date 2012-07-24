@@ -7,6 +7,7 @@ jQuery coreUISelect is a cross browser easy to stylize select element with jQuer
 
 * Full customization
 * Automatic calculations
+* Optiongroup support
 * Keyboard support
 * Powerful callback functions
 * Compatible with mobile devices
