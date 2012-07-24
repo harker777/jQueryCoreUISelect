@@ -108,8 +108,13 @@
 	outline: none;
 }
 
+
 .j-scroll-pane .b-core-ui-select__dropdown__item {
     margin-right: 20px;
+}
+
+.b-core-ui-select__dropdown__list {
+    margin: 0!important;
 }
 
 .b-core-ui-select__dropdown__item {
@@ -117,6 +122,15 @@
     min-height: 18px;
     list-style-type: none;
     cursor: pointer;
+}
+
+
+.b-core-ui-select__dropdown__label {
+    padding: 10px;
+    min-height: 18px;
+    font-style: italic;
+    list-style-type: none;
+    border-bottom: 1px solid #ccc;
 }
 
 .b-core-ui-select__dropdown__item.disabled,

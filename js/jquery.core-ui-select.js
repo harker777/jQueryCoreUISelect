@@ -46,7 +46,9 @@
             },
             dropdown : {
                 container : '<div class="b-core-ui-select__dropdown"></div>',
-                wrapper : '<ul class="b-core-ui-select__dropdown__wrap"></ul>',
+                wrapper : '<div class="b-core-ui-select__dropdown__wrap"></div>',
+                list : '<ul class="b-core-ui-select__dropdown__list"></ul>',
+                optionLabel : '<li class="b-core-ui-select__dropdown__label"></li>',
                 item : '<li class="b-core-ui-select__dropdown__item"></li>'
             }
         }
@@ -87,14 +89,14 @@
 
         // Build dropdown container
         this.dropdown = $(this.templates.dropdown.container);
-        this.dropdownWrapper =  $(this.templates.dropdown.wrapper)
-            .appendTo(this.dropdown);
+        this.dropdownWrapper =  $(this.templates.dropdown.wrapper).appendTo(this.dropdown);
 
-        this.settings.appendToBody ? this.dropdown.appendTo($('body')) : this.dropdown.insertBefore(this.domSelect.parent());
+        this.settings.appendToBody ? this.dropdown.appendTo($('body')) : this.dropdown.insertBefore(this.domSelect);
 
         // Build dropdown
-        this.domSelect.find('option')
-            .each($.proxy(this, 'addItems'));
+        this.dropdownList =  $(this.templates.dropdown.list).appendTo(this.dropdownWrapper);
+        this.domSelect.find('option').each($.proxy(this, 'addItems'));
+
 
         // Build dropdown
         this.dropdownItem =  this.dropdown.find('.'+$(this.templates.dropdown.item).attr('class'));
@@ -102,6 +104,8 @@
         // Add classes for dropdown
         this.dropdownItem.filter(':first-child').addClass('first');
         this.dropdownItem.filter(':last-child').addClass('last');
+
+        this.addOptionGroup();
 
         // Add placeholder value by selected option
         this.setSelectValue(this.getSelectedItem().text());
@@ -121,17 +125,17 @@
     }
 
     CoreUISelect.prototype.simulateShowedDomSelect = function () {
-        this.domSelect.css(
+       this.domSelect.css(
             {
                 'position' : 'absolute',
-                'top' : this.select.offset().top,
-                'left' : this.select.offset().left,
+                'top' : this.select.position().top,
+                'left' : this.select.position().left,
                 'height' : 0,
                 'width' : this.select.innerWidth(),
                 'opacity' : 0,
                 'z-index' : -1
             });
-        return this;
+       return this;
     }
 
     CoreUISelect.prototype.bindUIEvents = function() {
@@ -142,6 +146,12 @@
         if( $.browser.mobile) this.domSelect.bind('change', $.proxy(this, 'changeDropdownData'));
         this.select.bind('click', $.proxy(this, 'onSelectClick'));
         this.dropdownItem.bind('click', $.proxy(this, 'onDropdownItemClick'));
+    }
+
+
+
+    CoreUISelect.prototype.getCurrentIndexOfItem = function(__item) {
+        return this.domSelect.find('option').index($(this.domSelect).find('option:selected'));
     }
 
     CoreUISelect.prototype.scrollToCurrentDropdownItem = function(__item) {
@@ -178,7 +188,7 @@
             this.isSelectShow = true;
             this.dropdown.addClass('show').removeClass('hide');
             if(this.isJScrollPane) this.initJScrollPane();
-            this.scrollToCurrentDropdownItem(this.dropdownItem.eq(this.currentItemOfDomSelect.index()));
+            this.scrollToCurrentDropdownItem(this.dropdownItem.eq(this.getCurrentIndexOfItem()));
             this.updateDropdownPosition();
         }
     }
@@ -210,8 +220,8 @@
             this.prevItemOfDomSelect = this.currentItemOfDomSelect;
             this.currentItemOfDomSelect = this.domSelect.find('option:selected');
             this.dropdownItem.removeClass("selected");
-            this.dropdownItem.eq(this.currentItemOfDomSelect.index()).addClass("selected");
-            this.scrollToCurrentDropdownItem(this.dropdownItem.eq(this.currentItemOfDomSelect.index()));
+            this.dropdownItem.eq(this.domSelect.find('option').index($(this.domSelect).find('option:selected'))).addClass("selected");
+            this.scrollToCurrentDropdownItem(this.dropdownItem.eq(this.getCurrentIndexOfItem()));
             this.setSelectValue(this.currentItemOfDomSelect.text());
             this.onDomSelectChange();
         }
@@ -247,9 +257,7 @@
         this.isDocumentMouseDown = false;
         this.isSelectFocus = true;
         this.select.addClass('focus');
-        this.simulateShowedDomSelect();
         this.settings.onFocus && this.settings.onFocus.apply(this, [this.domSelect, 'focus']);
-
     }
 
     CoreUISelect.prototype.onBlur = function() {
@@ -310,6 +318,20 @@
         this.selectValue.text(_text);
     }
 
+    CoreUISelect.prototype.isOptionGroup = function() {
+        return this.domSelect.find('optgroup').length>0;
+    }
+
+    CoreUISelect.prototype.addOptionGroup = function() {
+        var optionGroup = this.domSelect.find('optgroup');
+        for(var i=0; i<optionGroup.length; i++) {
+            var index = this.domSelect.find("option").index($(optionGroup[i]).find('option:first-child'))
+            $(this.templates.dropdown.optionLabel)
+                .text($(optionGroup[i]).attr('label'))
+                .insertBefore(this.dropdownItem.eq(index));
+        }
+    }
+
     CoreUISelect.prototype.addItems = function(index, el) {
         var el = $(el);
         var item = $(this.templates.dropdown.item).text(el.text());
@@ -319,7 +341,7 @@
             item.addClass('selected');
             el.attr('selected', 'selected');
         }
-        item.appendTo(this.dropdownWrapper);
+        item.appendTo(this.dropdownList);
     }
 
     CoreUISelect.prototype.getSelectedItem = function() {
